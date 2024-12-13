@@ -35,13 +35,26 @@ class _PeopleScreenState extends State<PeopleScreen> {
                   pinned: true,
                   backgroundColor: Colors.black,
                   flexibleSpace: FlexibleSpaceBar(
-                    title: const Text(
-                      'Characters',
-                      style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+                    centerTitle: true, 
+                    title: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0), 
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.6), 
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: const Text(
+                        'Characters',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                      ),
                     ),
                     background: Image.network(
                       'https://orion-uploads.openroadmedia.com/lg_7b14486fa0b1-50-best-star-wars-characters_feature.jpg',
-                      fit: BoxFit.contain,
+                      fit: BoxFit.contain, 
                     ),
                   ),
                 ),
@@ -53,8 +66,7 @@ class _PeopleScreenState extends State<PeopleScreen> {
                           'https://starwars-visualguide.com/assets/img/characters/${index + 1}.jpg';
 
                       return Padding(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16.0, vertical: 8.0),
+                        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 1.0), // Más padding externo
                         child: GestureDetector(
                           onTap: () {
                             Navigator.push(
@@ -70,42 +82,56 @@ class _PeopleScreenState extends State<PeopleScreen> {
                           child: Container(
                             decoration: BoxDecoration(
                               color: Colors.grey[900],
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(15), // Bordes más redondeados
                             ),
-                            child: ListTile(
-                              leading: Hero(
-                                tag: 'hero-${person.name}',
-                                child: ClipOval(
-                                  child: Image.network(
-                                    imageUrl,
-                                    height: 80,
-                                    width: 50,
-                                    fit: BoxFit.cover,
-                                    errorBuilder:
-                                        (context, error, stackTrace) {
-                                      return const Icon(Icons.error,
-                                          color: Colors.red);
-                                    },
+                            padding: const EdgeInsets.all(16.0), // Espaciado interno dentro de la card
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Hero(
+                                  tag: 'hero-${person.name}',
+                                  child: ClipOval(
+                                    child: Image.network(
+                                      imageUrl,
+                                      height: 100, // Imagen más grande
+                                      width: 100,
+                                      fit: BoxFit.cover,
+                                      errorBuilder: (context, error, stackTrace) {
+                                        return const Icon(Icons.error, color: Colors.red, size: 50);
+                                      },
+                                    ),
                                   ),
                                 ),
-                              ),
-                              title: Text(
-                                person.name!,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
+                                const SizedBox(width: 16.0), // Espaciado entre la imagen y el texto
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        person.name!,
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20, // Texto más grande
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8.0), // Espaciado entre título y subtítulo
+                                      Text(
+                                        person.gender!,
+                                        style: const TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 16, // Subtítulo más grande
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              subtitle: Text(
-                                person.gender!,
-                                style: const TextStyle(
-                                  color: Colors.grey,
-                                ),
-                              ),
+                              ],
                             ),
                           ),
                         ),
                       );
+
                     },
                     childCount: snapshot.data!.results!.length,
                   ),

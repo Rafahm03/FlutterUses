@@ -41,87 +41,107 @@ class _PeopleDetailState extends State<PeopleDetail> with TickerProviderStateMix
     // Inicia la animación de giro
     _controller.forward(from: 0);
   }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.person.name ?? "Unknown"),
-        backgroundColor: Colors.black,
+@override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      title: Text(
+        widget.person.name ?? "Unknown",
+        style: const TextStyle(
+          color: Colors.black, // Texto negro
+          fontWeight: FontWeight.bold,
+        ),
       ),
-      body: Stack(
-        children: [
-          // Fondo de pantalla
-          Image.network(
-            'https://img.freepik.com/fotos-premium/fondo-vertical-cielo-estrellado-negro-nocturno-3d-ilustracion-universo-infinito_118047-10254.jpg?w=360',
-            fit: BoxFit.cover,
-            height: double.infinity,
-            width: double.infinity,
-            alignment: Alignment.center,
-          ),
-          // Contenido principal
-          SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Hero(
-                    tag: 'hero-${widget.person.name}',
-                    child: GestureDetector(
-                      onTap: _onImageTapped, // Detecta el toque en la imagen
-                      child: AnimatedBuilder(
-                        animation: _controller,
-                        builder: (context, child) {
-                          return Transform.rotate(
-                            angle: _rotationAnimation.value, // Aplicar la rotación
-                            child: ClipOval(
-                              child: Image.network(
-                                widget.imageUrl,
-                                height: 200,
-                                width: 200,
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return const Icon(Icons.error, color: Colors.red, size: 100);
-                                },
-                              ),
+      backgroundColor: Colors.white, // Fondo blanco para AppBar
+      iconTheme: const IconThemeData(color: Colors.black), // Iconos en negro
+      elevation: 2, // Sombra ligera para el AppBar
+    ),
+    body: Stack(
+      children: [
+        // Fondo de pantalla
+        Image.network(
+          'https://img.freepik.com/fotos-premium/fondo-vertical-cielo-estrellado-negro-nocturno-3d-ilustracion-universo-infinito_118047-10254.jpg?w=360',
+          fit: BoxFit.cover,
+          height: double.infinity,
+          width: double.infinity,
+          alignment: Alignment.center,
+        ),
+        // Contenido principal
+        SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Hero(
+                  tag: 'hero-${widget.person.name}',
+                  child: GestureDetector(
+                    onTap: _onImageTapped, // Inicia animación al tocar
+                    child: AnimatedBuilder(
+                      animation: _controller,
+                      builder: (context, child) {
+                        return Transform.rotate(
+                          angle: _rotationAnimation.value,
+                          child: ClipOval(
+                            child: Image.network(
+                              widget.imageUrl,
+                              height: 200,
+                              width: 200,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return const Icon(
+                                  Icons.error,
+                                  color: Colors.red,
+                                  size: 100,
+                                );
+                              },
                             ),
-                          );
-                        },
-                      ),
+                          ),
+                        );
+                      },
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  Text(
-                    widget.person.name ?? "Unknown",
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
+                ),
+                const SizedBox(height: 16),
+                Text(
+                  widget.person.name ?? "Unknown",
+                  style: const TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
+                    color: Color.fromARGB(255, 255, 197, 7),
                   ),
-                  const SizedBox(height: 16),
-                  _buildAttributeRow("Height", widget.person.height ?? "Unknown", Icons.height),
-                  _buildAttributeRow("Mass", widget.person.mass ?? "Unknown", Icons.fitness_center),
-                  _buildAttributeRow("Hair Color", widget.person.hairColor ?? "Unknown", Icons.palette),
-                  _buildAttributeRow("Skin Color", widget.person.skinColor ?? "Unknown", Icons.format_color_fill),
-                  _buildAttributeRow("Eye Color", widget.person.eyeColor ?? "Unknown", Icons.remove_red_eye),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    style: ElevatedButton.styleFrom(backgroundColor: Colors.black),
-                    child: const Text("Back", style: TextStyle(color: Colors.white)),
+                ),
+                const SizedBox(height: 16),
+                // Atributos
+                _buildAttributeRow("Height", widget.person.height ?? "Unknown", Icons.height),
+                _buildAttributeRow("Mass", widget.person.mass ?? "Unknown", Icons.fitness_center),
+                _buildAttributeRow("Hair Color", widget.person.hairColor ?? "Unknown", Icons.palette),
+                _buildAttributeRow("Skin Color", widget.person.skinColor ?? "Unknown", Icons.format_color_fill),
+                _buildAttributeRow("Eye Color", widget.person.eyeColor ?? "Unknown", Icons.remove_red_eye),
+                const SizedBox(height: 20),
+                // Botón de retorno
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   ),
-                ],
-              ),
+                  child: const Text(
+                    "Back",
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                ),
+              ],
             ),
           ),
-        ],
-      ),
-    );
-  }
+        ),
+      ],
+    ),
+  );
+}
+
 
   Widget _buildAttributeRow(String label, String value, IconData icon) {
     return Padding(

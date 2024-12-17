@@ -32,15 +32,18 @@ class _MainMenuScreenState extends State<MainMenuScreen> {
         onTap: _onTap,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.home, size: 28),
             label: 'Inicio',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.movie),
+            icon: Icon(Icons.movie, size: 28),
             label: 'Películas',
           ),
         ],
+        selectedIconTheme: const IconThemeData(size: 30),
+        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.bold),
       ),
+
     );
   }
 }

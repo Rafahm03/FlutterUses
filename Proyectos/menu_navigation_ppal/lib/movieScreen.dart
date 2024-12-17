@@ -34,9 +34,9 @@ class _MoviesScreenState extends State<MoviesScreen> {
     return Scaffold(
       backgroundColor: Colors.black, // Fondo negro
       appBar: AppBar(
-        title: const Text('Películas', style: TextStyle(color: Colors.white)),
+        title: const Text(' Películas 🎬', style: TextStyle(color: Colors.white)),
         backgroundColor: const Color.fromARGB(255, 100, 34, 253),
-        elevation: 0,
+        elevation: 0, 
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

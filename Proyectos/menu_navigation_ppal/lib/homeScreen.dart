@@ -121,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 12.0),
               child: Text(
-                'Actores Populares',
+                '🌟 Actores Populares 🗣️',
                 style: TextStyle(
                     fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
               ),
@@ -131,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 12.0),
               child: Text(
-                'Películas Populares',
+                '🍿 Películas Populares 📽️',
                 style: TextStyle(
                     fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
               ),
